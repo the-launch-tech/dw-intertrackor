@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 import Alert from 'react-bootstrap/Alert'
 
-import { Props, handleExport } from './config'
+import { Props, handleExport, calculateProperties } from './config'
 import { TimeSeries } from '../../components/charts/TimeSeries'
 
 import { ClickWindow, Click } from '../../types'
@@ -24,16 +24,17 @@ const Actions: React.FC<Props> = ({ history, createClickWindow }): JSX.Element =
     { windowStartTime: number; totalClicks: number }[]
   >([])
   const [tempClicks, setTempClicks] = React.useState<Click[]>([])
+  const [delays, setDelays] = React.useState<string[]>(['0ms', '2000ms', '4000ms'])
+  const [colors, setColors] = React.useState<string[]>(['#f56537', '#367693', '#a0bfa9'])
   const [speed, setSpeed] = React.useState<string>('4500ms')
   const tempClickWindowsRef = React.useRef<{ windowStartTime: number; totalClicks: number }[]>(
     tempClickWindows
   )
-  const tempClicksRef = React.useRef<{ click_time: number }[]>([])
+  const tempClicksRef = React.useRef<{ clickTime: number }[]>([])
   const lastStartTimeRef = React.useRef<number>(lastStartTime)
   const speedRef = React.useRef<string>(speed)
-
-  const delay = ['0ms', '2000ms', '4000ms']
-  const color = ['#f56537', '#367693', '#a0bfa9']
+  const delaysRef = React.useRef<string[]>(delays)
+  const colorsRef = React.useRef<string[]>(colors)
 
   React.useEffect(() => {
     mounted = true
@@ -60,12 +61,15 @@ const Actions: React.FC<Props> = ({ history, createClickWindow }): JSX.Element =
         if (!mounted) return
         createClickWindow({
           body: {
-            total_clicks: tempClicksRef.current.length.toString(),
-            window_end_time: Date.now().toString(),
-            window_start_time: lastStartTimeRef.current.toString(),
+            totalClicks: tempClicksRef.current.length,
+            windowEndTime: Date.now(),
+            windowStartTime: lastStartTimeRef.current,
           },
         }).catch(console.error)
-        setSpeed(calculateProperties(tempClicksRef.current.length))
+        const properties = calculateProperties(tempClicksRef.current.length)
+        setSpeed(properties.speed)
+        setDelays(properties.delays)
+        setColors(properties.colors)
         setTempClickWindows(prev => [
           ...prev,
           { windowStartTime: lastStartTimeRef.current, totalClicks: tempClicksRef.current.length },
@@ -82,30 +86,10 @@ const Actions: React.FC<Props> = ({ history, createClickWindow }): JSX.Element =
 
   function onButtonClick(event: React.MouseEvent): void {
     event.preventDefault()
-    setTempClicks(prev => [...prev, { click_time: Date.now() }])
+    setTempClicks(prev => [...prev, { clickTime: Date.now() }])
     if (!clicked) {
       setClicked(true)
     }
-  }
-
-  /**
-   * @note This should be refactored into a nice algorithm....
-   */
-  function calculateProperties(windowContaining: number): string {
-    if (windowContaining < 1) {
-      return `10000ms`
-    } else if (windowContaining < 2) {
-      return `4000ms`
-    } else if (windowContaining < 3) {
-      return `3000ms`
-    } else if (windowContaining < 5) {
-      return `2250ms`
-    } else if (windowContaining < 8) {
-      return `1600ms`
-    } else if (windowContaining < 13) {
-      return `1000ms`
-    }
-    return `500ms`
   }
 
   function updateRefs() {
@@ -113,13 +97,15 @@ const Actions: React.FC<Props> = ({ history, createClickWindow }): JSX.Element =
     tempClicksRef.current = tempClicks
     lastStartTimeRef.current = lastStartTime
     speedRef.current = speed
+    delaysRef.current = delays
+    colorsRef.current = colors
   }
 
   return (
     <React.Fragment>
       {!clicked && (
         <Alert className="alert font-weight-bolder" variant="success" onClick={onButtonClick}>
-          Clickthe Intertracktor Interactor and get dizzy! Let's track your interactions.
+          Click the Intertracktor Interactor and get dizzy! Let's track your interactions.
         </Alert>
       )}
       <Container fluid className="h-100">
@@ -129,15 +115,15 @@ const Actions: React.FC<Props> = ({ history, createClickWindow }): JSX.Element =
               <div className="custom-button-wrapper">
                 <div
                   className="custom-button-obj"
-                  style={{ animationDuration: speed, animationDelay: delay[0], color: color[0] }}
+                  style={{ animationDuration: speed, animationDelay: delays[0], color: colors[0] }}
                 ></div>
                 <div
                   className="custom-button-obj custom-button-obj--2"
-                  style={{ animationDuration: speed, animationDelay: delay[1], color: color[1] }}
+                  style={{ animationDuration: speed, animationDelay: delays[1], color: colors[1] }}
                 ></div>
                 <div
                   className="custom-button-obj custom-button-obj--3"
-                  style={{ animationDuration: speed, animationDelay: delay[2], color: color[2] }}
+                  style={{ animationDuration: speed, animationDelay: delays[2], color: colors[2] }}
                 ></div>
                 <svg viewBox="0 0 431.7 422.6" onClick={onButtonClick}>
                   <path

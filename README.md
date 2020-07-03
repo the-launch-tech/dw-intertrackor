@@ -25,7 +25,7 @@ This was super fun.
 
 I really enjoyed putting together a simple real-time interaction tracker. And, I think it plays nicely with the novel button idea - adding another dimension of play.
 
-My only reservation is that during the development of the Java backend I scoped out a set of schemas/packages that was too robust for the amount of time I had to work on the project - not to mention my inexperience with Java. After being very close to tying it all together, in the end, I had to make some sacrifices in my schema datatypes in order to meet all requirements. Due to this a lot of the ground I made within Spring Boot was scrapped in favor of a less than ideal methodology.
+My only reservation is that during the development of the Java backend I scoped out a set of schemas/packages that was too robust for the amount of time I had to work on the project - not to mention my inexperience with Java. After being very close to tying it all together, in the end, I had to make some sacrifices.
 
 Nonetheless, the ideas for the front-end that I touched on were very fun - and hopefully pretty cool to play around with.
 

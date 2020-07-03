@@ -26,24 +26,24 @@ const Reports: React.FC<Props> = ({
     findHistoricalClickWindows().catch(console.error)
   }, [])
 
-  const preparedClickData: { window_start_time: number; total_clicks: number }[] = React.useMemo<
-    { window_start_time: number; total_clicks: number }[]
+  const preparedClickData: { windowStartTime: number; totalClicks: number }[] = React.useMemo<
+    { windowStartTime: number; totalClicks: number }[]
   >(() => {
     return clickWindows.map((clickWindow: Model<ClickWindow>): {
-      window_start_time: number
-      total_clicks: number
+      windowStartTime: number
+      totalClicks: number
     } => ({
-      window_start_time: clickWindow.window_start_time,
-      total_clicks: clickWindow.total_clicks,
+      windowStartTime: clickWindow.windowStartTime,
+      totalClicks: clickWindow.totalClicks,
     }))
   }, [clickWindows])
 
-  const total_clicks: number = React.useMemo<number>(() => {
+  const totalClicks: number = React.useMemo<number>(() => {
     if (!clickWindows.length) {
       return -1
     }
     return clickWindows
-      .map((clickWindow: Model<ClickWindow>): number => clickWindow.total_clicks)
+      .map((clickWindow: Model<ClickWindow>): number => clickWindow.totalClicks)
       .reduce((a: number, b: number): number => a + b, 0)
   }, [clickWindows])
 
@@ -51,18 +51,17 @@ const Reports: React.FC<Props> = ({
     if (!clickWindows.length) {
       return -1
     }
-    return clickWindows.length / total_clicks
+    return clickWindows.length / totalClicks
   }, [clickWindows])
 
   const avgTimeBetweenClicks: number = React.useMemo<number>(() => {
-    if (!clickWindows[clickWindows.length - 1] || !clickWindows[0].window_start_time) {
+    if (!clickWindows[clickWindows.length - 1] || !clickWindows[0].windowStartTime) {
       return -1
     }
     return (
-      total_clicks /
+      totalClicks /
       Math.floor(
-        (clickWindows[clickWindows.length - 1].window_end_time -
-          clickWindows[0].window_start_time) /
+        (clickWindows[clickWindows.length - 1].windowEndTime - clickWindows[0].windowStartTime) /
           1000
       )
     )
@@ -81,7 +80,7 @@ const Reports: React.FC<Props> = ({
             <Card.Header className="transform-uppercase">Data Points</Card.Header>
             <ListGroup variant="flush">
               <ListGroup.Item>
-                Historical Clicks: <strong>{total_clicks}</strong>
+                Historical Clicks: <strong>{totalClicks}</strong>
               </ListGroup.Item>
               <ListGroup.Item>
                 Average Clicks Per Window: <strong>{avgClicksPerWindow.toFixed(2)}</strong>
@@ -98,15 +97,15 @@ const Reports: React.FC<Props> = ({
             <Card.Body id="report-chart-body">
               <Card.Title className="font-weight-bold">Historical Click Windows</Card.Title>
               {preparedClickData.length ? (
-                <TimeSeries<{ window_start_time: number; total_clicks: number }>
+                <TimeSeries<{ windowStartTime: number; totalClicks: number }>
                   data={
-                    preparedClickData.length > 40
-                      ? preparedClickData.slice(preparedClickData.length - 40)
+                    preparedClickData.length > 100
+                      ? preparedClickData.slice(preparedClickData.length - 100)
                       : preparedClickData
                   }
                   widthRef="report-chart-body"
-                  selectX={datum => new Date(datum.window_start_time)}
-                  selectY={datum => datum.total_clicks}
+                  selectX={datum => new Date(datum.windowStartTime)}
+                  selectY={datum => datum.totalClicks}
                 />
               ) : (
                 <div>No Click History Data</div>

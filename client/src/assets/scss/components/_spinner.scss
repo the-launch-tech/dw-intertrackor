@@ -57,5 +57,20 @@
 
   svg {
     width: 429px;
+
+    path {
+      transition: 0.2s;
+      stroke: transparentize($textMuted, 0.7);
+    }
+
+    &:hover {
+      path {
+        stroke: $textMuted;
+      }
+    }
+
+    &:focus {
+      stroke: transparentize($textMuted, 0.3);
+    }
   }
 }

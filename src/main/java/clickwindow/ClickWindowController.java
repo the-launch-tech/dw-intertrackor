@@ -1,7 +1,9 @@
 package clickwindow;
 
 import java.util.List;
+import java.util.Hashtable;
 import java.util.HashMap;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,10 +38,10 @@ public class ClickWindowController {
 
 	@CrossOrigin
 	@RequestMapping(path = "", headers = "Accept=application/json", method = RequestMethod.POST)
-  public ClickWindow save(@RequestBody HashMap<String, String> requestData) {
-		String totalClicks = requestData.get("total_clicks");
-    String windowStartTime = requestData.get("window_start_time");
-    String windowEndTime = requestData.get("window_end_time");
+  public ClickWindow save(@RequestBody HashMap<String, Long> requestData) {
+		int totalClicks = requestData.get("totalClicks").intValue();
+    Long windowStartTime = requestData.get("windowStartTime");
+    Long windowEndTime = requestData.get("windowEndTime");
 		ClickWindow clickWindow = new ClickWindow();
 		clickWindow.setTotalClicks(totalClicks);
 		clickWindow.setWindowStartTime(windowStartTime);

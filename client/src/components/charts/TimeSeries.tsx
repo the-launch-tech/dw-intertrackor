@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as d3 from 'd3'
 import { extent as d3ArrayExtent } from 'd3-array'
 import {
   scaleLinear as d3ScaleLinear,
@@ -6,7 +7,7 @@ import {
   ScaleLinear,
   ScaleTime,
 } from 'd3-scale'
-import { line as d3Line } from 'd3-shape'
+import { line as d3Line, CurveGeneratorLineOnly } from 'd3-shape'
 import { axisBottom as d3AxisBottom, axisLeft as d3AxisLeft, Axis } from 'd3-axis'
 import { select as d3Select } from 'd3-selection'
 
@@ -24,8 +25,8 @@ export function TimeSeries<D>({
   React.useEffect(() => widthRefFn(), [])
 
   function onResize(ref: any): void {
-    setWidth(ref.clientWidth - 80)
-    setHeight(ref.clientHeight - 80)
+    setWidth(ref.clientWidth - 60)
+    setHeight(ref.clientHeight - 60)
     console.log('outer width', width)
   }
 
@@ -63,9 +64,11 @@ export function TimeSeries<D>({
 
   const selectScaledY = (datum: any): any => yScale(selectY(datum))
 
-  const sparkLine = d3Line()
+  const sparkLine: d3.Line<[number, number]> = d3
+    .line()
     .x(selectScaledX)
     .y(selectScaledY)
+    .curve(d3.curveCatmullRom.alpha(0.8))
 
   const linePath: string | null = sparkLine(data as any)
 
@@ -80,10 +83,10 @@ export function TimeSeries<D>({
     <svg
       id="timeseries-container"
       className="timeseries-container"
-      height={height + 40}
-      width={width + 40}
+      height={height + 60}
+      width={width + 60}
     >
-      <g className="timeseries-contentContainer" style={{ transform: `translate(20px, 20px)` }}>
+      <g className="timeseries-contentContainer" style={{ transform: `translate(30px, 30px)` }}>
         <rect
           className="timeseries-contentContainerBackgroundRect"
           height={height}

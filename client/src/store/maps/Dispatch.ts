@@ -9,8 +9,6 @@ import {
   WrappedThunkDispatch,
   ModalOptions,
   ClickWindow,
-  ModifiedClickWindow,
-  CamelModifiedClickWindow,
 } from '../../types'
 
 export default {
@@ -21,22 +19,22 @@ export default {
   }),
   Reports: (dispatch: WrappedThunkDispatch<never>) => ({
     findHistoricalClickWindows: async () => {
-      return await GenericThunk.find<CamelModifiedClickWindow, Function>(
+      return await GenericThunk.find<ClickWindow, Function>(
         dispatch,
         'click-windows',
-        (response: Model<CamelModifiedClickWindow>[]): void => {
+        (response: Model<ClickWindow>[]): void => {
           dispatch(ClickAction.storeWindows(response))
         }
       )
     },
   }),
   Actions: (dispatch: WrappedThunkDispatch<never>) => ({
-    createClickWindow: async (options: Create<ModifiedClickWindow>) => {
-      return await GenericThunk.create<CamelModifiedClickWindow, ModifiedClickWindow, never>(
+    createClickWindow: async (options: Create<ClickWindow>) => {
+      return await GenericThunk.create<ClickWindow, ClickWindow, never>(
         dispatch,
         'click-windows',
         options.body,
-        (response: Model<CamelModifiedClickWindow>) => {
+        (response: Model<ClickWindow>) => {
           dispatch(ClickAction.createWindow(response))
         }
       )

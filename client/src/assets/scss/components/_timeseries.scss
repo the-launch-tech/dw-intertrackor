@@ -5,7 +5,7 @@
     .timeseries-xAxis {
       text {
         font-size: 0.7rem;
-        stroke: $textMuted;
+        stroke: transparentize($textMuted, 0.75);
         font-family: $display;
       }
     }
@@ -13,7 +13,7 @@
     .timeseries-yAxis {
       text {
         font-size: 0.7rem;
-        stroke: $textMuted;
+        stroke: transparentize($textMuted, 0.75);
         font-family: $display;
       }
     }
@@ -21,14 +21,14 @@
     .timeseries-line {
       path {
         fill: transparent;
-        stroke: lighten($main, 10%);
+        stroke: transparentize(lighten($main, 10%), 0.5);
         stroke-width: 2;
       }
     }
 
     .timeseries-scatter {
       circle {
-        fill: darken($main, 10%);
+        fill: transparent;
         stroke: $main;
         stroke-width: 2;
       }

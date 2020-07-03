@@ -20,7 +20,7 @@ import HttpService from './HttpService'
 import { GenericThunk } from './store/thunks'
 import { ClickAction } from './store/actions'
 
-import { Context, Model, CamelModifiedClickWindow } from './types'
+import { Context, Model, ClickWindow } from './types'
 
 const app: express.Application = require('express')()
 const http = require('http').createServer(app)
@@ -34,13 +34,10 @@ app.get('*', async (req, res) => {
     const store = getStore({}, HttpStatic)
 
     try {
-      await GenericThunk.find<
-        CamelModifiedClickWindow,
-        (clickResponse: Model<CamelModifiedClickWindow>[]) => void
-      >(
+      await GenericThunk.find<ClickWindow, (clickResponse: Model<ClickWindow>[]) => void>(
         store.dispatch,
         'click-windows',
-        (clickResponse: Model<CamelModifiedClickWindow>[]): void => {
+        (clickResponse: Model<ClickWindow>[]): void => {
           store.dispatch(ClickAction.storeWindows(clickResponse))
         }
       )

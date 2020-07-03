@@ -1,9 +1,8 @@
 import { ClickTypes } from '../types/index'
 import merge from '../merge'
 import initialState from '../initialState'
-import { normalizeClickWindow } from '../../utils/normalizeClickWindow'
 
-import { State, Action, ClickWindow, CamelModifiedClickWindow } from '../../types'
+import { State, Action, ClickWindow } from '../../types'
 
 const { log, error } = console
 
@@ -19,15 +18,9 @@ export default (state: State['Click'] = initialState.Click, action: Action) => {
 }
 
 const createWindow = (state: State['Click'], payload: Action['payload']): State['Click'] => {
-  return merge<State['Click']>(state, {
-    clickWindows: [...state.clickWindows, normalizeClickWindow(payload)],
-  })
+  return merge<State['Click']>(state, { clickWindows: [...state.clickWindows, payload] })
 }
 
 const storeWindows = (state: State['Click'], payload: Action['payload']): State['Click'] => {
-  return merge<State['Click']>(state, {
-    clickWindows: (payload || []).map(
-      (item: CamelModifiedClickWindow): ClickWindow => normalizeClickWindow(item)
-    ),
-  })
+  return merge<State['Click']>(state, { clickWindows: payload })
 }
