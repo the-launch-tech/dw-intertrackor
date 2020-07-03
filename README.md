@@ -1,7 +1,5 @@
 # InterTracktor
 
-For DataWheel.
-
 InterTracktor is a SSR ReactJS app that tracks click interactions in a creative way and represents that data visually in real-time as well as gathering some naive information about the clicking history. All click-windows are persisted to a PostgreSQL DB leveraged by the Java SpringBoot MVC.
 
 ---
