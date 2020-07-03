@@ -1,0 +1,12 @@
+.page-footer {
+  height: 30px;
+
+  .footer-copyright {
+    color: $textMuted;
+    font-size: 0.7rem;
+
+    a {
+      font-size: inherit;
+    }
+  }
+}

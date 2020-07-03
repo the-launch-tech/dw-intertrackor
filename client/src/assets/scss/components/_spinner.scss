@@ -1,0 +1,61 @@
+.custom-button-wrapper {
+  position: relative;
+
+  @keyframes appear {
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes move {
+    10% {
+      opacity: 1;
+      offset-distance: 0%;
+      transform: scale(1);
+    }
+    30% {
+      box-shadow: -0.5rem 0 0.3rem var(--color, white);
+    }
+    70% {
+      box-shadow: -0.5rem 0 0.3rem var(--color, white);
+    }
+    90% {
+      opacity: 1;
+      offset-distance: 100%;
+      transform: scale(0.2);
+      box-shadow: none;
+    }
+    100% {
+      opacity: 0;
+      offset-distance: 100%;
+      transform: scale(0.2);
+    }
+  }
+
+  .custom-button-obj {
+    --color: #f56537;
+    position: absolute;
+    top: 0;
+    left: 0;
+    offset-path: var(--path);
+    animation: move infinite ease-in-out;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: var(--color);
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  .custom-button-obj--2 {
+    --color: #367693;
+  }
+
+  .custom-button-obj--3 {
+    --color: #a0bfa9;
+  }
+
+  svg {
+    width: 429px;
+  }
+}

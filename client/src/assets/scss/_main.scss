@@ -1,0 +1,36 @@
+@import 'utils/utils';
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 80%;
+  overflow: hidden;
+
+  body {
+    font-family: $body;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: $base;
+    color: $textNormal;
+    margin: 0;
+
+    #app {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+
+      .main-container {
+        height: calc(100vh - 100px);
+      }
+
+      @import 'partials/partials';
+      @import 'pages/pages';
+      @import 'components/components';
+    }
+  }
+}

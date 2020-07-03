@@ -1,0 +1,114 @@
+@mixin input($size) {
+  @if $size == textarea {
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100px;
+    max-height: 100px;
+    padding: 1rem;
+
+    @media (max-width: 991px) {
+      min-height: 80px;
+      max-height: 80px;
+      padding: 0.8rem;
+    }
+
+    @media (max-width: 599px) {
+      min-height: 70px;
+      max-height: 70px;
+      padding: 0.7rem;
+    }
+  } @else if $size == standard {
+    width: 100%;
+    height: 50px;
+    padding: 1rem;
+
+    @media (max-width: 991px) {
+      height: 42px;
+      padding: 0.8rem;
+    }
+
+    @media (max-width: 599px) {
+      height: 34px;
+      padding: 0.7rem;
+    }
+  } @else if $size == small {
+    width: 100%;
+    height: 35px;
+    padding: 0.5rem;
+
+    @media (max-width: 991px) {
+      height: 32px;
+      padding: 0.4rem;
+    }
+
+    @media (max-width: 599px) {
+      height: 28px;
+      padding: 0.35rem;
+    }
+  }
+
+  font-weight: 400;
+  background-color: $main;
+  border: solid 1px $main;
+  color: $std_copy;
+  -webkit-box-shadow: inset 0px 0px 2px -2px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset 0px 0px 2px -2px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 0px 2px -2px rgba(0, 0, 0, 0.75);
+
+  &:hover {
+    background-color: darken($main, 2%);
+    border: solid 1px $main;
+  }
+
+  &:focus {
+    background-color: darken($main, 2%);
+    border: solid 1px darken($main, 2%);
+    -webkit-box-shadow: inset 0px 0px 0 0px rgba(0, 0, 0, 0);
+    -moz-box-shadow: inset 0px 0px 0 0px rgba(0, 0, 0, 0);
+    box-shadow: inset 0px 0px 0 0px rgba(0, 0, 0, 0);
+  }
+
+  &:active {
+    background-color: darken($main, 2%);
+    border: solid 1px darken($main, 2%);
+    -webkit-box-shadow: inset 0px 0px 0 0px rgba(0, 0, 0, 0);
+    -moz-box-shadow: inset 0px 0px 0 0px rgba(0, 0, 0, 0);
+    box-shadow: inset 0px 0px 0 0px rgba(0, 0, 0, 0);
+  }
+}
+
+@mixin hover-transition($normal, $hover) {
+  color: $normal;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:visited {
+    color: $normal;
+  }
+
+  &:hover {
+    color: $hover;
+  }
+
+  &:active {
+    color: $normal;
+  }
+}
+
+@mixin a-hover($normal, $hover) {
+  a {
+    @include hover-transition($normal, $hover);
+  }
+}
+
+@mixin icon-spacing($size) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+
+  i,
+  svg {
+    margin-right: $size;
+  }
+}

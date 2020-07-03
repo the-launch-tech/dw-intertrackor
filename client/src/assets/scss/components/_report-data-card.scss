@@ -1,0 +1,12 @@
+.report-data-card {
+  background-color: lighten($base, 3%);
+
+  .list-group-item {
+    background-color: darken($base, 3%);
+    border-bottom-color: $main;
+  }
+}
+
+.report-chart-card {
+  background-color: lighten($base, 3%);
+}

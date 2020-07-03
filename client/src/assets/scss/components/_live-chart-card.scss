@@ -1,0 +1,12 @@
+.live-chart-card {
+  background-color: darken($base, 5%);
+
+  -webkit-box-shadow: 1px 1px 22px -8px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 1px 1px 22px -8px rgba(0, 0, 0, 0.75);
+  box-shadow: 1px 1px 22px -8px rgba(0, 0, 0, 0.75);
+
+  .card-header {
+    background-color: $main;
+    color: $base;
+  }
+}
